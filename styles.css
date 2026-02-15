@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #ffeef8 0%, #fff0f5 25%, #f0f8ff 50%, #f5f0ff 75%, #fff5ee 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    max-width: 90vw;
+    width: 100%;
+}
+
+.drawing-area {
+    position: relative;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hello-kitty-svg {
+    width: min(400px, 85vw);
+    height: min(400px, 85vw);
+    background: transparent;
+}
+
+/* Animaciones Hello Kitty */
+.hello-kitty-svg path { stroke-dasharray: 0; stroke-dashoffset: 0; fill-opacity: 0; stroke-opacity: 0; }
+.hello-kitty-svg .main-outline { stroke: #000; stroke-width: 3; fill: none; stroke-dasharray: 1500; stroke-dashoffset: 1500; animation: drawOutline 3s ease-in-out 0.5s forwards; }
+.hello-kitty-svg .face { fill: #ffffff; stroke: #000; stroke-width: 2; stroke-dasharray: 1200; stroke-dashoffset: 1200; fill-opacity: 0; animation: drawAndFill 2s ease-in-out 3.5s forwards; }
+.hello-kitty-svg .bow { fill: #cc2229; stroke: #000; stroke-width: 1.5; stroke-dasharray: 600; stroke-dashoffset: 600; fill-opacity: 0; animation: drawAndFill 1.5s ease-in-out 5.5s forwards; }
+.hello-kitty-svg .bow-detail { fill: #cc2229; stroke: #000; stroke-width: 1.5; stroke-dasharray: 500; stroke-dashoffset: 500; fill-opacity: 0; animation: drawAndFill 1s ease-in-out 6.2s forwards; }
+.hello-kitty-svg .bow-center { fill: #cc2229; animation: fadeIn 0.5s ease-in-out 7s forwards; }
+.hello-kitty-svg .eye-left, .hello-kitty-svg .eye-right { fill: #000; animation: fadeIn 0.8s ease-in-out 7.5s forwards; }
+.hello-kitty-svg .nose { fill: #000; animation: fadeIn 0.5s ease-in-out 8s forwards; }
+.hello-kitty-svg .nose-inner { fill: #f2c831; animation: fadeIn 0.3s ease-in-out 8.3s forwards; }
+.hello-kitty-svg .whisker-left-1, .hello-kitty-svg .whisker-left-2, .hello-kitty-svg .whisker-left-3, .hello-kitty-svg .whisker-right-1, .hello-kitty-svg .whisker-right-2, .hello-kitty-svg .whisker-right-3 { stroke: #000; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 50; stroke-dashoffset: 50; animation: drawWhisker 0.8s ease-in-out forwards; }
+.hello-kitty-svg .whisker-left-1 { animation-delay: 8.5s; } .hello-kitty-svg .whisker-left-2 { animation-delay: 8.7s; } .hello-kitty-svg .whisker-left-3 { animation-delay: 8.9s; }
+.hello-kitty-svg .whisker-right-1 { animation-delay: 9.1s; } .hello-kitty-svg .whisker-right-2 { animation-delay: 9.3s; } .hello-kitty-svg .whisker-right-3 { animation-delay: 9.5s; }
+
+@keyframes drawOutline { 0% { stroke-dashoffset: 1500; stroke-opacity: 0; } 100% { stroke-dashoffset: 0; stroke-opacity: 1; } }
+@keyframes drawAndFill { 0% { stroke-dashoffset: 1200; fill-opacity: 0; } 100% { stroke-dashoffset: 0; fill-opacity: 1; stroke-opacity: 1; } }
+@keyframes drawWhisker { 0% { stroke-dashoffset: 50; stroke-opacity: 0; } 100% { stroke-dashoffset: 0; stroke-opacity: 1; } }
+@keyframes fadeIn { 0% { fill-opacity: 0; } 100% { fill-opacity: 1; } }
+
+.continue-btn {
+    margin-top: 30px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #666;
+    border: 1px solid rgba(200, 200, 200, 0.3);
+    border-radius: 50px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.hidden { display: none; }
+
+/* MENSAJE ROMÁNTICO */
+.romantic-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ffeef8 0%, #fff0f5 25%, #f0f8ff 50%, #f5f0ff 75%, #fff5ee 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.6s ease;
+    padding: 20px;
+}
+
+.romantic-message.show { opacity: 1; visibility: visible; }
+
+/* AQUÍ ESTÁ EL TEXTO DE OMARLYS EN GRANDE */
+.romantic-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: min(4rem, 11vw);
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+    max-width: 95%;
+    line-height: 1.3;
+}
+
+.typing-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background-color: #000;
+    margin-left: 4px;
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret { 50% { opacity: 0; } }
+
+/* LA X DE CERRAR EN SU SITIO */
+.close-message {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #8b5a83;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+/* RECUPERADOS: TUS 8 CORAZONES FLOTANTES */
+.hearts-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    pointer-events: none;
+    opacity: 0;
+    animation: showHearts 1s ease-out 2s forwards;
+}
+
+.heart { position: absolute; width: 20px; height: 20px; background: #e91e63; transform: rotate(45deg); animation: floatUp 6s ease-out infinite; }
+.heart::before, .heart::after { content: ''; position: absolute; width: 20px; height: 20px; background: #e91e63; border-radius: 50%; }
+.heart::before { top: -10px; left: 0; }
+.heart::after { top: 0; left: -10px; }
+
+/* Posiciones exactas */
+.heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+.heart:nth-child(2) { left: 20%; animation-delay: 1s; }
+.heart:nth-child(3) { left: 35%; animation-delay: 2s; }
+.heart:nth-child(4) { left: 50%; animation-delay: 3s; }
+.heart:nth-child(5) { left: 65%; animation-delay: 1.5s; }
+.heart:nth-child(6) { left: 80%; animation-delay: 2.5s; }
+.heart:nth-child(7) { left: 90%; animation-delay: 0.5s; }
+.heart:nth-child(8) { left: 45%; animation-delay: 4s; }
+
+@keyframes floatUp {
+    0% { bottom: -30px; opacity: 0; transform: rotate(45deg) scale(0.3); }
+    10% { opacity: 1; }
+    100% { bottom: 450px; opacity: 0; transform: rotate(45deg) scale(0.8) translateX(var(--drift, 0px)); }
+}
+
+@keyframes showHearts { 100% { opacity: 1; } }
+
+/* EFECTO DE CLIC NUEVO */
+.heart-click {
+    position: fixed;
+    background: #ff1493 !important;
+    width: 15px;
+    height: 15px;
+    transform: rotate(45deg);
+    pointer-events: none;
+    z-index: 9999;
+    animation: animacionCorazon 1.5s ease-out forwards;
+}
+
+.heart-click::before, .heart-click::after { content: ''; position: absolute; width: 100%; height: 100%; background: inherit; border-radius: 50%; }
+.heart-click::before { top: -50% !important; left: 0 !important; }
+.heart-click::after { left: -50% !important; top: 0 !important; }
+
+@keyframes animacionCorazon {
+    0% { transform: translate(-50%, -50%) rotate(45deg) scale(0); opacity: 1; }
+    100% { transform: translate(-50%, -120px) rotate(45deg) scale(1.8); opacity: 0; }
+}
+
+@media (max-width: 480px) {
+    .heart::before { top: -8px; } .heart::after { left: -8px; }
+}
